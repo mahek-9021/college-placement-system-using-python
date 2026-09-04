@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard | CampusPlace{% endblock %}
+{% block content %}
+
+<h3 class="fw-bold mb-4"><i class="fa-solid fa-gauge me-2"></i>Admin Dashboard</h3>
+
+<div class="row g-4 mb-5 text-center">
+  <div class="col-6 col-md-2-4 col-lg">
+    <div class="stat-card p-3 rounded-4">
+      <i class="fa-solid fa-user-graduate fa-2x mb-2 stat-icon"></i>
+      <h3 class="fw-bold mb-0">{{ stats.students }}</h3>
+      <p class="text-muted mb-0 small">Students</p>
+    </div>
+  </div>
+  <div class="col-6 col-md-2-4 col-lg">
+    <div class="stat-card p-3 rounded-4">
+      <i class="fa-solid fa-building fa-2x mb-2 stat-icon"></i>
+      <h3 class="fw-bold mb-0">{{ stats.companies }}</h3>
+      <p class="text-muted mb-0 small">Companies</p>
+    </div>
+  </div>
+  <div class="col-6 col-md-2-4 col-lg">
+    <div class="stat-card p-3 rounded-4">
+      <i class="fa-solid fa-file-signature fa-2x mb-2 stat-icon"></i>
+      <h3 class="fw-bold mb-0">{{ stats.jobs }}</h3>
+      <p class="text-muted mb-0 small">Jobs Posted</p>
+    </div>
+  </div>
+  <div class="col-6 col-md-2-4 col-lg">
+    <div class="stat-card p-3 rounded-4">
+      <i class="fa-solid fa-clipboard-list fa-2x mb-2 stat-icon"></i>
+      <h3 class="fw-bold mb-0">{{ stats.applications }}</h3>
+      <p class="text-muted mb-0 small">Applications</p>
+    </div>
+  </div>
+  <div class="col-6 col-md-2-4 col-lg">
+    <div class="stat-card p-3 rounded-4">
+      <i class="fa-solid fa-trophy fa-2x mb-2 stat-icon"></i>
+      <h3 class="fw-bold mb-0">{{ stats.placed }}</h3>
+      <p class="text-muted mb-0 small">Placed</p>
+    </div>
+  </div>
+</div>
+
+<div class="row g-4">
+  <div class="col-lg-8">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="fw-bold mb-3">Branch-wise Placement Summary</h5>
+        <div class="table-responsive">
+          <table class="table table-hover align-middle">
+            <thead class="table-light">
+              <tr><th>Branch</th><th>Total Students</th><th>Placed</th><th>Placement %</th></tr>
+            </thead>
+            <tbody>
+              {% for b in branch_stats %}
+              <tr>
+                <td>{{ b.branch }}</td>
+                <td>{{ b.total }}</td>
+                <td>{{ b.placed }}</td>
+                <td>
+                  {% set pct = (b.placed / b.total * 100) if b.total else 0 %}
+                  <div class="progress" style="height: 20px;">
+                    <div class="progress-bar bg-success" style="width: {{ pct }}%">{{ "%.0f"|format(pct) }}%</div>
+                  </div>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-4">
+    <div class="card h-100">
+      <div class="card-body">
+        <h5 class="fw-bold mb-3">Quick Actions</h5>
+        <div class="d-grid gap-2">
+          <a href="{{ url_for('admin_companies') }}" class="btn btn-outline-primary"><i class="fa-solid fa-building me-1"></i> Manage Companies</a>
+          <a href="{{ url_for('admin_jobs') }}" class="btn btn-outline-primary"><i class="fa-solid fa-briefcase me-1"></i> Manage Jobs</a>
+          <a href="{{ url_for('admin_students') }}" class="btn btn-outline-primary"><i class="fa-solid fa-users me-1"></i> View Students</a>
+          <a href="{{ url_for('admin_applications') }}" class="btn btn-outline-primary"><i class="fa-solid fa-clipboard-list me-1"></i> Review Applications</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

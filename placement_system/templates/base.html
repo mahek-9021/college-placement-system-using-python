@@ -1,0 +1,844 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}CampusPlace - College Placement System{% endblock %}</title>
+
+    <!-- Bootstrap -->
+    <link
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <!-- Font Awesome -->
+    <link
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        rel="stylesheet"
+    >
+
+    <!-- Google Font -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- Custom CSS -->
+    <link
+        href="{{ url_for('static', filename='style.css') }}"
+        rel="stylesheet"
+    >
+
+    {% block extra_css %}{% endblock %}
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+
+<nav class="navbar navbar-expand-lg navbar-dark navbar-custom sticky-top shadow-sm">
+
+    <div class="container">
+
+        <!-- Logo -->
+        <a class="navbar-brand fw-bold d-flex align-items-center"
+           href="{{ url_for('index') }}">
+
+            <span class="brand-icon">
+                <i class="fa-solid fa-graduation-cap"></i>
+            </span>
+
+            <span>CampusPlace</span>
+        </a>
+
+        <!-- Mobile Toggle -->
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navMenu"
+            aria-controls="navMenu"
+            aria-expanded="false"
+            aria-label="Toggle navigation">
+
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Navigation -->
+        <div class="collapse navbar-collapse" id="navMenu">
+
+            <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+
+                <!-- Home -->
+                <li class="nav-item">
+                    <a class="nav-link"
+                       href="{{ url_for('index') }}">
+                        <i class="fa-solid fa-house me-1"></i>
+                        Home
+                    </a>
+                </li>
+
+
+                <!-- ================= STUDENT ================= -->
+
+                {% if session.get('user_type') == 'student' %}
+
+                <li class="nav-item">
+                    <a class="nav-link"
+                       href="{{ url_for('student_dashboard') }}">
+                        <i class="fa-solid fa-chart-line me-1"></i>
+                        Dashboard
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link"
+                       href="{{ url_for('student_profile') }}">
+                        <i class="fa-solid fa-user me-1"></i>
+                        Profile
+                    </a>
+                </li>
+
+
+                <!-- Jobs Dropdown -->
+
+                <li class="nav-item dropdown">
+
+                    <a class="nav-link dropdown-toggle"
+                       href="#"
+                       role="button"
+                       data-bs-toggle="dropdown">
+
+                        <i class="fa-solid fa-briefcase me-1"></i>
+                        Placements
+                    </a>
+
+                    <ul class="dropdown-menu dropdown-menu-end shadow">
+
+                        <li>
+                            <a class="dropdown-item"
+                               href="#">
+                                <i class="fa-solid fa-building me-2"></i>
+                                Companies
+                            </a>
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item"
+                               href="#">
+                                <i class="fa-solid fa-bullhorn me-2"></i>
+                                Available Jobs
+                            </a>
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item"
+                               href="#">
+                                <i class="fa-solid fa-file-circle-check me-2"></i>
+                                My Applications
+                            </a>
+                        </li>
+
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item"
+                               href="#">
+                                <i class="fa-solid fa-calendar-days me-2"></i>
+                                Placement Drives
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </li>
+
+
+                <!-- Notifications -->
+
+                <li class="nav-item dropdown">
+
+                    <a class="nav-link position-relative"
+                       href="#"
+                       role="button"
+                       data-bs-toggle="dropdown">
+
+                        <i class="fa-solid fa-bell"></i>
+
+                        <span class="notification-badge">
+                            3
+                        </span>
+                    </a>
+
+                    <ul class="dropdown-menu dropdown-menu-end notification-menu shadow">
+
+                        <li>
+                            <h6 class="dropdown-header">
+                                Notifications
+                            </h6>
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item" href="#">
+                                <i class="fa-solid fa-building text-primary me-2"></i>
+                                New company registered
+                            </a>
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item" href="#">
+                                <i class="fa-solid fa-calendar text-success me-2"></i>
+                                Placement drive tomorrow
+                            </a>
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item" href="#">
+                                <i class="fa-solid fa-check-circle text-warning me-2"></i>
+                                Application status updated
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </li>
+
+
+                <!-- User Dropdown -->
+
+                <li class="nav-item dropdown">
+
+                    <a class="nav-link dropdown-toggle d-flex align-items-center"
+                       href="#"
+                       role="button"
+                       data-bs-toggle="dropdown">
+
+                        <span class="user-avatar">
+                            <i class="fa-solid fa-user"></i>
+                        </span>
+
+                        <span class="ms-2">
+                            {{ session.get('user_name') }}
+                        </span>
+
+                    </a>
+
+                    <ul class="dropdown-menu dropdown-menu-end shadow">
+
+                        <li>
+                            <h6 class="dropdown-header">
+                                Student Account
+                            </h6>
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item"
+                               href="{{ url_for('student_profile') }}">
+                                <i class="fa-solid fa-user me-2"></i>
+                                My Profile
+                            </a>
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item"
+                               href="#">
+                                <i class="fa-solid fa-gear me-2"></i>
+                                Settings
+                            </a>
+                        </li>
+
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item text-danger"
+                               href="{{ url_for('logout') }}">
+                                <i class="fa-solid fa-right-from-bracket me-2"></i>
+                                Logout
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </li>
+
+
+                <!-- ================= ADMIN ================= -->
+
+                {% elif session.get('user_type') == 'admin' %}
+
+                <li class="nav-item">
+                    <a class="nav-link"
+                       href="{{ url_for('admin_dashboard') }}">
+                        <i class="fa-solid fa-chart-pie me-1"></i>
+                        Dashboard
+                    </a>
+                </li>
+
+                <!-- Admin Management Dropdown -->
+
+                <li class="nav-item dropdown">
+
+                    <a class="nav-link dropdown-toggle"
+                       href="#"
+                       role="button"
+                       data-bs-toggle="dropdown">
+
+                        <i class="fa-solid fa-layer-group me-1"></i>
+                        Management
+                    </a>
+
+                    <ul class="dropdown-menu dropdown-menu-end shadow">
+
+                        <li>
+                            <a class="dropdown-item"
+                               href="{{ url_for('admin_companies') }}">
+                                <i class="fa-solid fa-building me-2"></i>
+                                Companies
+                            </a>
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item"
+                               href="{{ url_for('admin_jobs') }}">
+                                <i class="fa-solid fa-briefcase me-2"></i>
+                                Jobs
+                            </a>
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item"
+                               href="{{ url_for('admin_students') }}">
+                                <i class="fa-solid fa-users me-2"></i>
+                                Students
+                            </a>
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item"
+                               href="{{ url_for('admin_applications') }}">
+                                <i class="fa-solid fa-file-lines me-2"></i>
+                                Applications
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </li>
+
+
+                <!-- Reports -->
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="fa-solid fa-chart-column me-1"></i>
+                        Reports
+                    </a>
+                </li>
+
+
+                <!-- Admin Notification -->
+
+                <li class="nav-item dropdown">
+
+                    <a class="nav-link position-relative"
+                       href="#"
+                       role="button"
+                       data-bs-toggle="dropdown">
+
+                        <i class="fa-solid fa-bell"></i>
+
+                        <span class="notification-badge">
+                            5
+                        </span>
+
+                    </a>
+
+                    <ul class="dropdown-menu dropdown-menu-end shadow">
+
+                        <li>
+                            <h6 class="dropdown-header">
+                                Admin Notifications
+                            </h6>
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item" href="#">
+                                <i class="fa-solid fa-user-plus me-2"></i>
+                                New student registered
+                            </a>
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item" href="#">
+                                <i class="fa-solid fa-building me-2"></i>
+                                New company added
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </li>
+
+
+                <!-- Admin Profile -->
+
+                <li class="nav-item dropdown">
+
+                    <a class="nav-link dropdown-toggle"
+                       href="#"
+                       role="button"
+                       data-bs-toggle="dropdown">
+
+                        <span class="user-avatar">
+                            <i class="fa-solid fa-user-shield"></i>
+                        </span>
+
+                        Admin
+                    </a>
+
+                    <ul class="dropdown-menu dropdown-menu-end shadow">
+
+                        <li>
+                            <a class="dropdown-item" href="#">
+                                <i class="fa-solid fa-gear me-2"></i>
+                                Settings
+                            </a>
+                        </li>
+
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item text-danger"
+                               href="{{ url_for('logout') }}">
+                                <i class="fa-solid fa-right-from-bracket me-2"></i>
+                                Logout
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </li>
+
+
+                <!-- ================= GUEST ================= -->
+
+                {% else %}
+
+                <li class="nav-item">
+                    <a class="nav-link"
+                       href="#about">
+                        About
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link"
+                       href="#features">
+                        Features
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link"
+                       href="{{ url_for('login') }}">
+                        <i class="fa-solid fa-right-to-bracket me-1"></i>
+                        Login
+                    </a>
+                </li>
+
+                <li class="nav-item">
+
+                    <a class="btn btn-light btn-sm fw-semibold px-3"
+                       href="{{ url_for('register') }}">
+
+                        <i class="fa-solid fa-user-plus me-1"></i>
+                        Register
+
+                    </a>
+
+                </li>
+
+                {% endif %}
+
+
+                <!-- Dark Mode -->
+
+                <li class="nav-item ms-lg-2">
+
+                    <button
+                        id="themeToggle"
+                        class="btn btn-outline-light btn-sm theme-btn"
+                        title="Toggle dark mode">
+
+                        <i class="fa-solid fa-moon"></i>
+
+                    </button>
+
+                </li>
+
+            </ul>
+
+        </div>
+    </div>
+</nav>
+
+
+<!-- ================= FLASH MESSAGES ================= -->
+
+<div class="container mt-4">
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+
+        {% if messages %}
+
+            {% for category, message in messages %}
+
+            <div
+                class="alert alert-{{ category }} alert-dismissible fade show custom-alert"
+                role="alert">
+
+                <i class="fa-solid
+                    {% if category == 'success' %}
+                        fa-circle-check
+                    {% elif category == 'danger' %}
+                        fa-circle-xmark
+                    {% elif category == 'warning' %}
+                        fa-triangle-exclamation
+                    {% else %}
+                        fa-circle-info
+                    {% endif %}
+                    me-2">
+                </i>
+
+                {{ message }}
+
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert">
+                </button>
+
+            </div>
+
+            {% endfor %}
+
+        {% endif %}
+
+    {% endwith %}
+
+</div>
+
+
+<!-- ================= MAIN CONTENT ================= -->
+
+<main class="container my-4 page-content">
+
+    {% block content %}
+
+    {% endblock %}
+
+</main>
+
+
+<!-- ================= BACK TO TOP ================= -->
+
+<button id="backToTop"
+        class="back-to-top"
+        title="Back to top">
+
+    <i class="fa-solid fa-arrow-up"></i>
+
+</button>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer class="footer-custom mt-5">
+
+    <div class="container py-5">
+
+        <div class="row g-4">
+
+            <!-- About -->
+
+            <div class="col-lg-4">
+
+                <h5 class="fw-bold text-white">
+
+                    <i class="fa-solid fa-graduation-cap me-2"></i>
+                    CampusPlace
+
+                </h5>
+
+                <p class="text-white-50 mt-3">
+
+                    A complete college placement management system
+                    connecting students, companies and placement
+                    administrators.
+
+                </p>
+
+            </div>
+
+
+            <!-- Quick Links -->
+
+            <div class="col-md-4 col-lg-2">
+
+                <h6 class="text-white fw-bold">
+                    Quick Links
+                </h6>
+
+                <ul class="list-unstyled footer-links">
+
+                    <li>
+                        <a href="{{ url_for('index') }}">
+                            Home
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            About
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            Companies
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            Jobs
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+
+            <!-- Support -->
+
+            <div class="col-md-4 col-lg-3">
+
+                <h6 class="text-white fw-bold">
+                    Support
+                </h6>
+
+                <ul class="list-unstyled footer-links">
+
+                    <li>
+                        <a href="#">
+                            Help Center
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            Contact Us
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            Privacy Policy
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            Terms & Conditions
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+
+            <!-- Social -->
+
+            <div class="col-md-4 col-lg-3">
+
+                <h6 class="text-white fw-bold">
+                    Follow Us
+                </h6>
+
+                <div class="social-links mt-3">
+
+                    <a href="#">
+                        <i class="fa-brands fa-facebook-f"></i>
+                    </a>
+
+                    <a href="#">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+
+                    <a href="#">
+                        <i class="fa-brands fa-linkedin-in"></i>
+                    </a>
+
+                    <a href="#">
+                        <i class="fa-brands fa-x-twitter"></i>
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <hr class="border-secondary my-4">
+
+        <div class="text-center">
+
+            <p class="mb-0 text-white-50">
+
+                &copy; {{ current_year or 2026 }}
+                CampusPlace —
+                College Placement Management System
+
+            </p>
+
+        </div>
+
+    </div>
+
+</footer>
+
+
+<!-- Bootstrap JS -->
+
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js">
+</script>
+
+
+<!-- ================= CUSTOM JAVASCRIPT ================= -->
+
+<script>
+
+    /* ================= DARK MODE ================= */
+
+    const themeToggle = document.getElementById("themeToggle");
+
+    if (themeToggle) {
+
+        const savedTheme = localStorage.getItem("theme");
+
+        if (savedTheme === "dark") {
+            document.body.classList.add("dark-mode");
+            themeToggle.innerHTML =
+                '<i class="fa-solid fa-sun"></i>';
+        }
+
+        themeToggle.addEventListener("click", function () {
+
+            document.body.classList.toggle("dark-mode");
+
+            const isDark =
+                document.body.classList.contains("dark-mode");
+
+            localStorage.setItem(
+                "theme",
+                isDark ? "dark" : "light"
+            );
+
+            themeToggle.innerHTML = isDark
+                ? '<i class="fa-solid fa-sun"></i>'
+                : '<i class="fa-solid fa-moon"></i>';
+
+        });
+
+    }
+
+
+    /* ================= BACK TO TOP ================= */
+
+    const backToTop =
+        document.getElementById("backToTop");
+
+    window.addEventListener("scroll", function () {
+
+        if (window.scrollY > 300) {
+
+            backToTop.classList.add("show");
+
+        } else {
+
+            backToTop.classList.remove("show");
+
+        }
+
+    });
+
+    if (backToTop) {
+
+        backToTop.addEventListener("click", function () {
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+
+        });
+
+    }
+
+
+    /* ================= AUTO HIDE ALERT ================= */
+
+    setTimeout(function () {
+
+        const alerts =
+            document.querySelectorAll(".custom-alert");
+
+        alerts.forEach(function (alert) {
+
+            const closeButton =
+                alert.querySelector(".btn-close");
+
+            if (closeButton) {
+                closeButton.click();
+            }
+
+        });
+
+    }, 5000);
+
+
+    /* ================= ACTIVE NAV LINK ================= */
+
+    const currentPath =
+        window.location.pathname;
+
+    document.querySelectorAll(".navbar-nav .nav-link")
+        .forEach(function (link) {
+
+            if (link.getAttribute("href") === currentPath) {
+
+                link.classList.add("active");
+
+            }
+
+        });
+
+</script>
+
+
+{% block extra_js %}{% endblock %}
+
+</body>
+</html>
+

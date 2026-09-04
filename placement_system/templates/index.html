@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block title %}Home | CampusPlace{% endblock %}
+{% block content %}
+
+<div class="hero-section text-center rounded-4 p-5 mb-5">
+  <h1 class="display-5 fw-bold mb-3"><i class="fa-solid fa-briefcase me-2"></i>College Placement System</h1>
+  <p class="lead text-white-50">Connecting talented students with their dream careers.</p>
+  {% if not session.get('user_type') %}
+  <div class="mt-4">
+    <a href="{{ url_for('register') }}" class="btn btn-light btn-lg me-2 fw-semibold">Get Started</a>
+    <a href="{{ url_for('login') }}" class="btn btn-outline-light btn-lg">Login</a>
+  </div>
+  {% endif %}
+</div>
+
+<div class="row g-4 mb-5 text-center">
+  <div class="col-6 col-md-3">
+    <div class="stat-card p-4 rounded-4">
+      <i class="fa-solid fa-user-graduate fa-2x mb-2 stat-icon"></i>
+      <h3 class="fw-bold mb-0">{{ stats.students }}</h3>
+      <p class="text-muted mb-0">Students</p>
+    </div>
+  </div>
+  <div class="col-6 col-md-3">
+    <div class="stat-card p-4 rounded-4">
+      <i class="fa-solid fa-building fa-2x mb-2 stat-icon"></i>
+      <h3 class="fw-bold mb-0">{{ stats.companies }}</h3>
+      <p class="text-muted mb-0">Companies</p>
+    </div>
+  </div>
+  <div class="col-6 col-md-3">
+    <div class="stat-card p-4 rounded-4">
+      <i class="fa-solid fa-file-signature fa-2x mb-2 stat-icon"></i>
+      <h3 class="fw-bold mb-0">{{ stats.jobs }}</h3>
+      <p class="text-muted mb-0">Open Jobs</p>
+    </div>
+  </div>
+  <div class="col-6 col-md-3">
+    <div class="stat-card p-4 rounded-4">
+      <i class="fa-solid fa-trophy fa-2x mb-2 stat-icon"></i>
+      <h3 class="fw-bold mb-0">{{ stats.placed }}</h3>
+      <p class="text-muted mb-0">Students Placed</p>
+    </div>
+  </div>
+</div>
+
+<h4 class="fw-bold mb-3"><i class="fa-solid fa-bolt me-2"></i>Recently Posted Jobs</h4>
+{% if recent_jobs %}
+<div class="row g-4">
+  {% for job in recent_jobs %}
+  <div class="col-md-6 col-lg-4">
+    <div class="card job-card h-100">
+      <div class="card-body">
+        <h5 class="card-title fw-bold">{{ job.title }}</h5>
+        <p class="text-muted mb-1"><i class="fa-solid fa-building me-1"></i>{{ job.company_name }}</p>
+        {% if job.location %}<p class="text-muted mb-1"><i class="fa-solid fa-location-dot me-1"></i>{{ job.location }}</p>{% endif %}
+        {% if job.package %}<p class="text-muted mb-1"><i class="fa-solid fa-money-bill me-1"></i>{{ job.package }}</p>{% endif %}
+        <span class="badge bg-secondary">Min CGPA: {{ job.min_cgpa }}</span>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+<p class="text-muted">No jobs posted yet. Check back soon!</p>
+{% endif %}
+
+{% endblock %}

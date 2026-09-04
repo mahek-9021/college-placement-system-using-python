@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}My Profile | CampusPlace{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-7">
+    <div class="card auth-card">
+      <div class="card-body p-4">
+        <h3 class="fw-bold mb-4"><i class="fa-solid fa-id-card me-2"></i>My Profile</h3>
+        <div class="row g-3 mb-3">
+          <div class="col-md-6"><strong>Name:</strong> {{ student.name }}</div>
+          <div class="col-md-6"><strong>Email:</strong> {{ student.email }}</div>
+          <div class="col-md-6"><strong>Roll No:</strong> {{ student.roll_no }}</div>
+          <div class="col-md-6"><strong>Branch:</strong> {{ student.branch }}</div>
+        </div>
+        <hr>
+        <form method="POST">
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label">CGPA</label>
+              <input type="number" step="0.01" min="0" max="10" name="cgpa" class="form-control" value="{{ student.cgpa }}">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Phone</label>
+              <input type="text" name="phone" class="form-control" value="{{ student.phone or '' }}">
+            </div>
+            <div class="col-12">
+              <label class="form-label">Resume Link</label>
+              <input type="url" name="resume_link" class="form-control" value="{{ student.resume_link or '' }}" placeholder="https://...">
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary-custom mt-4">Save Changes</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,269 @@
+
+
+
+body {
+    font-family: "Inter", sans-serif;
+    background: #f6f8fc;
+    color: #212529;
+    transition: 0.3s ease;
+}
+
+
+/* ===============================
+   NAVBAR
+================================ */
+
+.navbar-custom {
+    background: linear-gradient(135deg, #172554, #2563eb);
+    min-height: 70px;
+}
+
+.navbar-brand {
+    font-size: 1.25rem;
+}
+
+.brand-icon {
+    width: 38px;
+    height: 38px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,0.15);
+    border-radius: 10px;
+    margin-right: 10px;
+}
+
+.navbar-custom .nav-link {
+    color: rgba(255,255,255,0.9);
+    font-weight: 500;
+    transition: 0.2s;
+}
+
+.navbar-custom .nav-link:hover,
+.navbar-custom .nav-link.active {
+    color: white;
+    background: rgba(255,255,255,0.12);
+    border-radius: 8px;
+}
+
+
+/* ===============================
+   USER AVATAR
+================================ */
+
+.user-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,0.2);
+    color: white;
+}
+
+
+/* ===============================
+   NOTIFICATION
+================================ */
+
+.notification-badge {
+    position: absolute;
+    top: 3px;
+    right: 0;
+    background: #dc3545;
+    color: white;
+    font-size: 10px;
+    min-width: 17px;
+    height: 17px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #2563eb;
+}
+
+.notification-menu {
+    min-width: 280px;
+}
+
+
+/* ===============================
+   DROPDOWN
+================================ */
+
+.dropdown-menu {
+    border: none;
+    border-radius: 12px;
+    padding: 8px;
+}
+
+.dropdown-item {
+    border-radius: 8px;
+    padding: 10px 12px;
+}
+
+.dropdown-item:hover {
+    background: #f1f5f9;
+}
+
+
+/* ===============================
+   ALERT
+================================ */
+
+.custom-alert {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+}
+
+
+/* ===============================
+   PAGE
+================================ */
+
+.page-content {
+    min-height: 60vh;
+}
+
+
+/* ===============================
+   BACK TO TOP
+================================ */
+
+.back-to-top {
+    position: fixed;
+    right: 25px;
+    bottom: 25px;
+
+    width: 45px;
+    height: 45px;
+
+    border: none;
+    border-radius: 50%;
+
+    background: #2563eb;
+    color: white;
+
+    display: none;
+    align-items: center;
+    justify-content: center;
+
+    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+
+    cursor: pointer;
+    z-index: 999;
+}
+
+.back-to-top.show {
+    display: flex;
+}
+
+
+/* ===============================
+   FOOTER
+================================ */
+
+.footer-custom {
+    background: #111827;
+}
+
+.footer-links li {
+    margin-bottom: 10px;
+}
+
+.footer-links a {
+    color: rgba(255,255,255,0.65);
+    text-decoration: none;
+    transition: 0.2s;
+}
+
+.footer-links a:hover {
+    color: white;
+    padding-left: 4px;
+}
+
+
+/* ===============================
+   SOCIAL LINKS
+================================ */
+
+.social-links {
+    display: flex;
+    gap: 10px;
+}
+
+.social-links a {
+    width: 40px;
+    height: 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: rgba(255,255,255,0.1);
+    color: white;
+
+    text-decoration: none;
+
+    transition: 0.2s;
+}
+
+.social-links a:hover {
+    transform: translateY(-3px);
+    background: rgba(255,255,255,0.2);
+}
+
+
+/* ===============================
+   DARK MODE
+================================ */
+
+body.dark-mode {
+    background: #0f172a;
+    color: #e2e8f0;
+}
+
+body.dark-mode .card,
+body.dark-mode .dropdown-menu {
+    background: #1e293b;
+    color: #e2e8f0;
+}
+
+body.dark-mode .dropdown-item {
+    color: #e2e8f0;
+}
+
+body.dark-mode .dropdown-item:hover {
+    background: #334155;
+}
+
+body.dark-mode .text-muted {
+    color: #94a3b8 !important;
+}
+
+
+/* ===============================
+   RESPONSIVE
+================================ */
+
+@media (max-width: 991px) {
+
+    .navbar-nav {
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
+
+    .navbar-custom .nav-link {
+        margin-bottom: 3px;
+    }
+
+    .theme-btn {
+        margin-top: 8px;
+    }
+
+}
+

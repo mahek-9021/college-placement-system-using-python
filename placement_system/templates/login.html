@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}Login | CampusPlace{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-6 col-lg-5">
+    <div class="card auth-card">
+      <div class="card-body p-4">
+        <h3 class="fw-bold text-center mb-4"><i class="fa-solid fa-right-to-bracket me-2"></i>Login</h3>
+
+        <ul class="nav nav-pills nav-justified mb-4" id="roleTab" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="student-tab" data-bs-toggle="pill" data-bs-target="#student-pane" type="button">
+              <i class="fa-solid fa-user-graduate me-1"></i> Student
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="admin-tab" data-bs-toggle="pill" data-bs-target="#admin-pane" type="button">
+              <i class="fa-solid fa-user-shield me-1"></i> Admin
+            </button>
+          </li>
+        </ul>
+
+        <div class="tab-content">
+          <div class="tab-pane fade show active" id="student-pane">
+            <form method="POST">
+              <input type="hidden" name="role" value="student">
+              <div class="mb-3">
+                <label class="form-label">Email</label>
+                <input type="email" name="identifier" class="form-control" required>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Password</label>
+                <input type="password" name="password" class="form-control" required>
+              </div>
+              <button type="submit" class="btn btn-primary-custom w-100">Login as Student</button>
+            </form>
+          </div>
+          <div class="tab-pane fade" id="admin-pane">
+            <form method="POST">
+              <input type="hidden" name="role" value="admin">
+              <div class="mb-3">
+                <label class="form-label">Username</label>
+                <input type="text" name="identifier" class="form-control" placeholder="admin">
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Password</label>
+                <input type="password" name="password" class="form-control" placeholder="admin123">
+              </div>
+              <button type="submit" class="btn btn-primary-custom w-100">Login as Admin</button>
+            </form>
+            <p class="text-muted small mt-2 mb-0">Default: <code>admin</code> / <code>admin123</code></p>
+          </div>
+        </div>
+
+        <p class="text-center mt-4 mb-0">New student? <a href="{{ url_for('register') }}">Register here</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

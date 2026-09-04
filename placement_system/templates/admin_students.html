@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Students | CampusPlace{% endblock %}
+{% block content %}
+
+<h3 class="fw-bold mb-4"><i class="fa-solid fa-users me-2"></i>Registered Students ({{ students|length }})</h3>
+
+<div class="card">
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-hover align-middle">
+        <thead class="table-light">
+          <tr>
+            <th>Name</th><th>Roll No</th><th>Branch</th><th>CGPA</th>
+            <th>Email</th><th>Phone</th><th>Resume</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for s in students %}
+          <tr>
+            <td class="fw-semibold">{{ s.name }}</td>
+            <td>{{ s.roll_no }}</td>
+            <td>{{ s.branch }}</td>
+            <td>{{ s.cgpa }}</td>
+            <td>{{ s.email }}</td>
+            <td>{{ s.phone or "-" }}</td>
+            <td>{% if s.resume_link %}<a href="{{ s.resume_link }}" target="_blank">View</a>{% else %}-{% endif %}</td>
+          </tr>
+          {% else %}
+          <tr><td colspan="7" class="text-muted text-center">No students registered yet.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

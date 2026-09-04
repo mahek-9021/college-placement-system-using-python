@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% block title %}Manage Jobs | CampusPlace{% endblock %}
+{% block content %}
+
+<h3 class="fw-bold mb-4"><i class="fa-solid fa-briefcase me-2"></i>Manage Jobs</h3>
+
+<div class="row g-4">
+  <div class="col-lg-4">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="fw-bold mb-3">Post New Job</h5>
+        {% if companies %}
+        <form method="POST">
+          <div class="mb-3">
+            <label class="form-label">Company *</label>
+            <select name="company_id" class="form-select" required>
+              {% for c in companies %}
+              <option value="{{ c.id }}">{{ c.name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Job Title *</label>
+            <input type="text" name="title" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Description</label>
+            <textarea name="description" class="form-control" rows="2"></textarea>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Minimum CGPA</label>
+            <input type="number" step="0.01" min="0" max="10" name="min_cgpa" class="form-control" value="0">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Eligible Branches</label>
+            <input type="text" name="eligible_branches" class="form-control" placeholder="Comma separated, blank = all">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Package</label>
+            <input type="text" name="package" class="form-control" placeholder="e.g. 8 LPA">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Location</label>
+            <input type="text" name="location" class="form-control">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Application Deadline</label>
+            <input type="date" name="deadline" class="form-control">
+          </div>
+          <button type="submit" class="btn btn-primary-custom w-100">Post Job</button>
+        </form>
+        {% else %}
+        <p class="text-muted">Please add a company first before posting a job.</p>
+        <a href="{{ url_for('admin_companies') }}" class="btn btn-outline-primary w-100">Add Company</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-8">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="fw-bold mb-3">All Jobs ({{ jobs|length }})</h5>
+        <div class="table-responsive">
+          <table class="table table-hover align-middle">
+            <thead class="table-light">
+              <tr><th>Title</th><th>Company</th><th>Min CGPA</th><th>Package</th><th>Deadline</th><th></th></tr>
+            </thead>
+            <tbody>
+              {% for j in jobs %}
+              <tr>
+                <td class="fw-semibold">{{ j.title }}</td>
+                <td>{{ j.company_name }}</td>
+                <td>{{ j.min_cgpa }}</td>
+                <td>{{ j.package or "-" }}</td>
+                <td>{{ j.deadline or "-" }}</td>
+                <td>
+                  <form method="POST" action="{{ url_for('delete_job', job_id=j.id) }}"
+                        onsubmit="return confirm('Delete this job posting?');">
+                    <button type="submit" class="btn btn-sm btn-outline-danger"><i class="fa-solid fa-trash"></i></button>
+                  </form>
+                </td>
+              </tr>
+              {% else %}
+              <tr><td colspan="6" class="text-muted text-center">No jobs posted yet.</td></tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

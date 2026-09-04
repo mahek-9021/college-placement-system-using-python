@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}Manage Companies | CampusPlace{% endblock %}
+{% block content %}
+
+<h3 class="fw-bold mb-4"><i class="fa-solid fa-building me-2"></i>Manage Companies</h3>
+
+<div class="row g-4">
+  <div class="col-lg-4">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="fw-bold mb-3">Add New Company</h5>
+        <form method="POST">
+          <div class="mb-3">
+            <label class="form-label">Company Name *</label>
+            <input type="text" name="name" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Description</label>
+            <textarea name="description" class="form-control" rows="3"></textarea>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Website</label>
+            <input type="url" name="website" class="form-control" placeholder="https://...">
+          </div>
+          <button type="submit" class="btn btn-primary-custom w-100">Add Company</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-8">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="fw-bold mb-3">All Companies ({{ companies|length }})</h5>
+        <div class="table-responsive">
+          <table class="table table-hover align-middle">
+            <thead class="table-light">
+              <tr><th>Name</th><th>Description</th><th>Website</th><th></th></tr>
+            </thead>
+            <tbody>
+              {% for c in companies %}
+              <tr>
+                <td class="fw-semibold">{{ c.name }}</td>
+                <td class="small text-muted">{{ c.description or "-" }}</td>
+                <td>{% if c.website %}<a href="{{ c.website }}" target="_blank">Visit</a>{% else %}-{% endif %}</td>
+                <td>
+                  <form method="POST" action="{{ url_for('delete_company', company_id=c.id) }}"
+                        onsubmit="return confirm('Delete this company and all its jobs?');">
+                    <button type="submit" class="btn btn-sm btn-outline-danger"><i class="fa-solid fa-trash"></i></button>
+                  </form>
+                </td>
+              </tr>
+              {% else %}
+              <tr><td colspan="4" class="text-muted text-center">No companies added yet.</td></tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
